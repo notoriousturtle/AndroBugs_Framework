@@ -1,5 +1,12 @@
 #-*- coding: utf-8 -*-
 
+"""
+## Improvements:
+	* Added debuggable check
+	* Raised backup check severity to warning, from notice
+	* Removed unnecessary data from app banner
+"""
+
 from __future__ import division
 from tools.modified.androguard.core.bytecodes import apk
 from tools.modified.androguard.core.bytecodes import dvm
@@ -56,10 +63,10 @@ import sys
 		3.Show the "KeyStore" related code or not
 
 	Flag:
-		[Critical] => very critical
-		[Warning]  => it's ok and not really need to change
-		[Notice]   => For hackers, you should notice.
-		[Info]	   => Information
+		[Critical]
+		[Warning] 
+		[Notice]  
+		[Info]	  
 
 	You can use these functions provided by the FilteringEngine to exclude class packages:
 		(1)Filter single class name:
@@ -3329,7 +3336,7 @@ Please add or modify "yourWebView.getSettings().setAllowFileAccess(false)" to yo
 	#Adb Backup check
 
 	if a.is_adb_backup_enabled() :
-		writer.startWriter("ALLOW_BACKUP", LEVEL_NOTICE, "AndroidManifest Adb Backup Checking", 
+		writer.startWriter("ALLOW_BACKUP", LEVEL_WARNING, "AndroidManifest Adb Backup Checking", 
 			"""ADB Backup is ENABLED for this app (default: ENABLED). ADB Backup is a good tool for backing up all of your files. If it's open for this app, people who have your phone can copy all of the sensitive data for this app in your phone (Prerequisite: 1.Unlock phone's screen 2.Open the developer mode). The sensitive data may include lifetime access token, username or password, etc.
 Security case related to ADB Backup:
 1.http://www.securityfocus.com/archive/1/530288/30/0/threaded
@@ -3340,6 +3347,17 @@ Reference: http://developer.android.com/guide/topics/manifest/application-elemen
 	else :
 		writer.startWriter("ALLOW_BACKUP", LEVEL_INFO, "AndroidManifest Adb Backup Checking", 
 			"This app has disabled Adb Backup.")
+
+	# ------------------------------------------------------------------------
+	#Debuggable check check
+
+	if a.is_debuggable() :
+		writer.startWriter("DEBUGGABLE", LEVEL_WARNING, "AndroidManifest Debuggable Checking", 
+			"""APK is debuggable
+""")
+	else :
+		writer.startWriter("DEBUGGABLE", LEVEL_INFO, "AndroidManifest Debuggable Checking", 
+			"The APK is not debuggable.")
 
 	# ------------------------------------------------------------------------
 	#SSL Verification Fail (To check whether the code verifies the certificate)
@@ -3565,12 +3583,7 @@ def main() :
 	try :
 
 		#Print Title
-		writer.writePlainInf("""*************************************************************************
-**   AndroBugs Framework - Android App Security Vulnerability Scanner  **
-**                            version: 1.0.0                           **
-**     author: Yu-Cheng Lin (@AndroBugs, http://www.AndroBugs.com)     **
-**               contact: androbugs.framework@gmail.com                **
-*************************************************************************""")
+		writer.writePlainInf("""**   AndroBugs Framework - Android App Security Vulnerability Scanner - Version 1.1  **""")
 
 		#Analyze
 		__analyze(writer, args)
