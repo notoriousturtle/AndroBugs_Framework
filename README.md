@@ -5,7 +5,7 @@ No splendid GUI interface, but the most efficient (less than 2 minutes per scan 
 
 Version: 1.1
 
-####Features:####
+#### Features ####
 
 - Find security vulnerabilities in an Android app
 - Check if the code is missing best practices
@@ -13,12 +13,20 @@ Version: 1.1
 - Collect Information from millions of apps
 - Check the app’s security protection (marked as ```<Hacker>```, designed for app repackaging hacking)
 
+## Improvements
+    * Added debuggable check
+    * Raised backup check severity to warning, from notice
+    * Removed unnecessary data from app banner
+    * Changed to high/medium/low/info risk ratings
+    * Added version check to WebView addJavascriptInterface check, min sdk of 4.2 must be used for ti to be vulnerable
 
-##Author
+By turtle.
+
+## Author
 
 - Yu-Cheng Lin  (androbugs.framework at gmail.com, @AndroBugs)
 
-## Steup Steps and Usage for Windows
+## Setup Steps and Usage for Windows
 
 **Easy to use for Android developers or hackers on Microsoft Windows: (a) No need to install Python 2.7 (b) No need to install any 3rd-party library (c) No need to install AndroBugs Framework**
 
